@@ -26,7 +26,7 @@ export default {
     return {
       apiLinkSearchMovies :"https://api.themoviedb.org/3/search/movie",
       api_key : '7e7faac1db87ee1385f5258c9fdad986',
-      query : 'matrix'
+      query : ''
     }
   },
   created(){
@@ -43,18 +43,34 @@ export default {
         }
       })
       .then(rensponse=>{
-        console.log(rensponse.data);
+
+        rensponse.data.results.forEach((element)=>{
+          const {original_title,original_language,title,vote_average} = element
+          console.log(
+            `
+            titolo originale ${original_title}
+            titolo ${title}
+            lingua originale ${original_language}
+            voto ${vote_average}
+
+            `
+          );
+        })
+        console.log(`ci sono ${rensponse.data.results.length} elementi`);
       })
-      .catch(function (error) {
-          console.log(error);
+      .catch(function () {
+          console.log('è vuoto');
       });
     },
 
     searchForElement(ele){
-      console.log(ele);
-      this.query = ele
-      this.library()
-      console.log(this.query);
+      if(ele.length >0) {
+
+        this.query = ele
+        this.library();
+        console.log(ele);
+
+      }
     }
 
   }
