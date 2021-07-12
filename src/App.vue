@@ -32,11 +32,6 @@ export default {
   created(){
     this.library();
   },
-  // computed : {
-  //   searchForElement(){
-  //     return this.query +='1';
-  //   }
-  // },
   methods: {
 
     library(){
