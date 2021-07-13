@@ -1,5 +1,9 @@
 <template>
-    <div>
+    <div class="me-3">
+        <div>
+           <img v-if="elementMovie.poster_path != null" :src="urlImgBefore + elementMovie.poster_path" :alt="elementMoviei.name">
+           <div v-else>Copertina non dispondibile</div>
+        </div>
         <ul>
             <li><strong>titolo originale : </strong> {{elementMovie.original_title}}</li>
             <li><strong>titolo : </strong> {{elementMovie.title}}</li>
@@ -19,7 +23,7 @@
 <script>
 export default {
     name:  'CardMovie',
-    props : ['elementMovie','elementFlag','elementSvg'],
+    props : ['elementMovie','elementFlag','elementSvg','urlImgBefore'],
 }
 </script>
 
