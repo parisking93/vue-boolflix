@@ -1,8 +1,8 @@
 <template>
   <form>
-      <label for="searchbar">cerca</label>
-      <input type="text" id="searchbar" v-model="searchMovie" >
-      <button @click.prevent="$emit('searchKeyUp', searchMovie)">Cerca</button>
+      <i class="text-light me-3 fas fa-bell"></i>
+      <input type="text" id="searchbar" v-model="searchMovie" placeholder="Cerca i tuoi film...">
+      <button class="btn-dark ms-1" @click.prevent="$emit('searchKeyUp', searchMovie)"><i class="fas fa-search"></i></button>
   </form>
 </template>
 

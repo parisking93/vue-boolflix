@@ -1,62 +1,51 @@
 <template>
   <div id="app">
-    <header>
-      <SearchBar @searchKeyUp="searchForElement"/>
+    <header class="d-flex justify-content-end">
+      <SearchBar @searchKeyUp="searchForElement" class="m-3"/>
     </header>
     <main>
-
+      <CardList :searched="searchArray"/>
     </main>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
 import SearchBar from '@/components/SearchBar.vue'
+import CardList from '@/components/CardList.vue'
 import axios from 'axios'
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
-    SearchBar
+    SearchBar,
+    CardList
   },
   data(){
     return {
       apiLinkSearchMovies :"https://api.themoviedb.org/3/search/movie",
       api_key : '7e7faac1db87ee1385f5258c9fdad986',
-      query : ''
+      query : '',
+      searchArray : '',
+      language : 'it-IT'
     }
   },
-  created(){
-    this.library();
-  },
+  // created(){
+  //   this.library();
+  // },
   methods: {
 
-    library(){
+    libraryMovies(){
       axios
       .get(this.apiLinkSearchMovies, {
         params : {
           api_key : this.api_key,
-          query : this.query
+          query : this.query,
+          language : this.language
         }
       })
       .then(rensponse=>{
-
-        rensponse.data.results.forEach((element)=>{
-          const {original_title,original_language,title,vote_average} = element
-          console.log(
-            `
-            titolo originale ${original_title}
-            titolo ${title}
-            lingua originale ${original_language}
-            voto ${vote_average}
-
-            `
-          );
-        })
-        console.log(`ci sono ${rensponse.data.results.length} elementi`);
+        this.searchArray = rensponse.data.results;
       })
       .catch(function () {
           console.log('è vuoto');
@@ -65,11 +54,8 @@ export default {
 
     searchForElement(ele){
       if(ele.length >0) {
-
         this.query = ele
-        this.library();
-        console.log(ele);
-
+        this.libraryMovies();
       }
     }
 
@@ -80,11 +66,8 @@ export default {
 <style lang="scss">
 @import '@/style/commons.scss';
 #app {
-  // font-family: Avenir, Helvetica, Arial, sans-serif;
-  // -webkit-font-smoothing: antialiased;
-  // -moz-osx-font-smoothing: grayscale;
-  // text-align: center;
-  // color: #2c3e50;
-  // margin-top: 60px;
+  header {
+    background-color: #1b1b1b;
+  }
 }
 </style>
