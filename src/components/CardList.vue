@@ -1,21 +1,21 @@
 <template>
-    <div>
-        <div v-if="!elementSearched" class="container" >
+    <div class="container text-light">
+        <div v-if="!elementSearched"  >
 
         </div>
-        <div class="container" v-else>
-            <h4>Films trovati per : {{elementSearched}}</h4>
-            <div class="d-flex flex-wrap overflow-x-hidden">
+        <div v-else>
+            <h3 class="mt-4 mb-3">Films trovati per : {{elementSearched}}</h3>
+            <div class="d-flex flex-wrap">
                 <div v-for="element in searchedMovies"  :key="element.id" >
-                    <CardMovie :elementMovie ="element" :elementFlag="flag" :elementSvg="svg"/>
+                    <CardMovie :elementMovie ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
                 </div>
             </div>
 
 
-            <h4>Serie Tv trovate per : {{elementSearched}}</h4>
-            <div class="d-flex flex-wrap overflow-x-hidden">
+            <h3 class="mt-4 mb-3">Serie Tv trovate per : {{elementSearched}}</h3>
+            <div class="d-flex flex-wrap">
                 <div v-for="element in searchedTv"  :key="element.id"  >
-                <CardTv :elementTv ="element" :elementFlag="flag" :elementSvg="svg"/>
+                <CardTv :elementTv ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
                 </div>
             </div>
             
@@ -37,7 +37,7 @@ export default {
         CardMovie,
         CardTv
     },
-    props : ['searchedMovies','searchedTv','elementSearched'],
+    props : ['searchedMovies','searchedTv','elementSearched','preUrl'],
     data() {
         return {
             flag :  'https://flagcdn.com/',
@@ -48,5 +48,6 @@ export default {
 </script>
 
 <style scoped>
+
     
 </style>

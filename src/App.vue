@@ -4,7 +4,7 @@
       <SearchBar @searchKeyUp="searchForElement" class="m-3"/>
     </header>
     <main>
-      <CardList :searchedMovies="searchArrayMovies" :searchedTv="searchArrayTv" :elementSearched="query"/>
+      <CardList :searchedMovies="searchArrayMovies" :searchedTv="searchArrayTv" :elementSearched="query" :preUrl="preUrlImg"/>
     </main>
   </div>
 </template>
@@ -30,6 +30,7 @@ export default {
       searchArrayMovies : '',
       searchArrayTv : '',
       language : 'it-IT',
+      preUrlImg : 'https://image.tmdb.org/t/p/w342'
     }
   },
   methods: {
@@ -79,5 +80,11 @@ export default {
   header {
     background-color: #1b1b1b;
   }
+  main {
+    height: calc(100vh - 62px);
+    background-color: #1b1b1b;
+    overflow: auto;
+  }
+
 }
 </style>

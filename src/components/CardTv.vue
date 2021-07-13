@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div>
+           <img v-if="elementTv.poster_path != null" :src="urlImgBefore + elementTv.poster_path" :alt="elementTv.name">
+           <div v-else>Copertina non dispondibile</div>
+        </div>
         <ul>
             <li><strong>titolo originale : </strong> {{elementTv.original_name}}</li>
             <li><strong>titolo : </strong> {{elementTv.name}}</li>
@@ -18,7 +22,7 @@
 <script>
 export default {
     name : 'CardTv',
-    props : ['elementTv','elementFlag','elementSvg'],
+    props : ['elementTv','elementFlag','elementSvg','urlImgBefore'],
 
 }
 </script>
