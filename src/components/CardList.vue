@@ -1,35 +1,52 @@
 <template>
-    <div class="d-flex flex-wrap overflow-x-hidden">
-        <ul v-for="element in searched"  :key="element.id" class="m-2">
-            <li><strong>titolo originale : </strong> {{element.original_title}}</li>
-            <li><strong>titolo : </strong> {{element.title}}</li>
-            <li>
-                <strong>lingua : </strong>
-                <img v-if="element.original_language !='en'" :src="flag + element.original_language + svg" width="30" :alt="element.original_language"> 
+    <div>
+        <div v-if="!elementSearched" class="container" >
 
-                <img v-else :src="flag + 'gb' + svg" width="30" :alt="element.original_language"> 
-            </li>
-            <li><strong>voto :  </strong> {{element.vote_average}}</li>
-        </ul>
+        </div>
+        <div class="container" v-else>
+            <h4>Films trovati per : {{elementSearched}}</h4>
+            <div class="d-flex flex-wrap overflow-x-hidden">
+                <div v-for="element in searchedMovies"  :key="element.id" >
+                    <CardMovie :elementMovie ="element" :elementFlag="flag" :elementSvg="svg"/>
+                </div>
+            </div>
+
+
+            <h4>Serie Tv trovate per : {{elementSearched}}</h4>
+            <div class="d-flex flex-wrap overflow-x-hidden">
+                <div v-for="element in searchedTv"  :key="element.id"  >
+                <CardTv :elementTv ="element" :elementFlag="flag" :elementSvg="svg"/>
+                </div>
+            </div>
+            
+        </div>
+
+
     </div>
+
 
 </template>
 
 <script>
+import CardMovie from '@/components/CardMovie.vue'
+import CardTv from '@/components/CardTv.vue'
+
 export default {
     name:'CardLists',
-    props : ['searched'],
+    components : {
+        CardMovie,
+        CardTv
+    },
+    props : ['searchedMovies','searchedTv','elementSearched'],
     data() {
         return {
-            bandiereArray : ['it','en','fr'],
             flag :  'https://flagcdn.com/',
             svg : '.svg',
-        }
+        }   
     },
-
 }
 </script>
 
-<style>
-
+<style scoped>
+    
 </style>

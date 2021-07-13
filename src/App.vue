@@ -4,7 +4,7 @@
       <SearchBar @searchKeyUp="searchForElement" class="m-3"/>
     </header>
     <main>
-      <CardList :searched="searchArray"/>
+      <CardList :searchedMovies="searchArrayMovies" :searchedTv="searchArrayTv" :elementSearched="query"/>
     </main>
   </div>
 </template>
@@ -24,18 +24,17 @@ export default {
   data(){
     return {
       apiLinkSearchMovies :"https://api.themoviedb.org/3/search/movie",
+      apiLinkSearchTv : "https://api.themoviedb.org/3/search/tv",
       api_key : '7e7faac1db87ee1385f5258c9fdad986',
       query : '',
-      searchArray : '',
-      language : 'it-IT'
+      searchArrayMovies : '',
+      searchArrayTv : '',
+      language : 'it-IT',
     }
   },
-  // created(){
-  //   this.library();
-  // },
   methods: {
 
-    libraryMovies(){
+    library(){
       axios
       .get(this.apiLinkSearchMovies, {
         params : {
@@ -45,17 +44,28 @@ export default {
         }
       })
       .then(rensponse=>{
-        this.searchArray = rensponse.data.results;
+        this.searchArrayMovies = rensponse.data.results;
       })
       .catch(function () {
           console.log('è vuoto');
       });
+      axios
+      .get(this.apiLinkSearchTv, {
+        params : {
+          api_key : this.api_key,
+          query : this.query,
+          language : this.language
+        }
+      })
+      .then(rensponse=>{
+        this.searchArrayTv = rensponse.data.results;
+      })
     },
 
     searchForElement(ele){
       if(ele.length >0) {
         this.query = ele
-        this.libraryMovies();
+        this.library();
       }
     }
 
