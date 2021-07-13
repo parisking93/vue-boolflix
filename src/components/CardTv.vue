@@ -14,7 +14,17 @@
                 <img v-else :src="elementFlag + elementTv.original_language + elementSvg" width="30" :alt="elementTv.original_language"> 
 
             </li>
-            <li><strong>voto :  </strong> {{elementTv.vote_average}}</li>
+            <li><strong>voto :  </strong>
+                 <div v-for="(element,index) in elementTv.vote_average" :key="index" class="d-inline-block">
+                        <div v-if="element == 'fas fa-star-half'"  class="box-star position-relative d-inline-block" >
+                            <i class="position-absolute  far far fa-star"></i>
+                            <i class="position-absolute" :class="element"></i>
+                        </div>
+                        <div v-else class="box-star position-relative d-inline-block">
+                            <i class="position-absolute" :class="element"></i>
+                        </div>
+                 </div>
+            </li>
         </ul>
     </div>
 </template>

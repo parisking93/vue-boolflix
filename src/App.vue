@@ -4,6 +4,7 @@
       <SearchBar @searchKeyUp="searchForElement" class="m-3"/>
     </header>
     <main>
+      <!-- <div class="text-light far fa-star"></div> -->
       <CardList :searchedMovies="searchArrayMovies" :searchedTv="searchArrayTv" :elementSearched="query" :preUrl="preUrlImg"/>
     </main>
   </div>
@@ -30,7 +31,9 @@ export default {
       searchArrayMovies : '',
       searchArrayTv : '',
       language : 'it-IT',
-      preUrlImg : 'https://image.tmdb.org/t/p/w342'
+      preUrlImg : 'https://image.tmdb.org/t/p/w342',
+
+
     }
   },
   methods: {
@@ -46,6 +49,7 @@ export default {
       })
       .then(rensponse=>{
         this.searchArrayMovies = rensponse.data.results;
+
       })
       .catch(function () {
           console.log('è vuoto');
@@ -61,15 +65,16 @@ export default {
       .then(rensponse=>{
         this.searchArrayTv = rensponse.data.results;
       })
+      .catch(function () {
+          console.log('è vuoto');
+      });
     },
-
     searchForElement(ele){
       if(ele.length >0) {
         this.query = ele
         this.library();
       }
     }
-
   }
 }
 </script>
