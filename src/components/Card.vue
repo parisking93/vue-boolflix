@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div >
            <img v-if="elementCard.poster_path != null" :src="urlImgBefore + elementCard.poster_path" :alt="elementCard.name || elementCard.title">
            <div v-else>Copertina non dispondibile</div>
         </div>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+
 export default {
     name : 'Card',
     props : ['elementCard','elementFlag','elementSvg','urlImgBefore'],
@@ -37,6 +38,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
+ 
 </style>

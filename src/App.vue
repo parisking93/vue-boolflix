@@ -57,34 +57,8 @@ export default {
           this.searchArrayMovies = responseMovie.data.results;
           this.searchArrayTv = responseTV.data.results;
         }))
-      // .get(this.apiLinkSearchMovies, {
-      //   params : {
-      //     api_key : this.api_key,
-      //     query : this.query,
-      //     language : this.language
-      //   }
-      // })
-      // .then(rensponse=>{
-      //   this.searchArrayMovies = rensponse.data.results;
 
-      // })
-      // .catch(function () {
-      //     console.log('è vuoto');
-      // });
-      // axios
-      // .get(this.apiLinkSearchTv, {
-      //   params : {
-      //     api_key : this.api_key,
-      //     query : this.query,
-      //     language : this.language
-      //   }
-      // })
-      // .then(rensponse=>{
-      //   this.searchArrayTv = rensponse.data.results;
-      // })
-      // .catch(function () {
-      //     console.log('è vuoto');
-      // });
+
     },
     searchForElement(ele){
       if(ele.length >0) {

@@ -2,18 +2,44 @@
     <div class="contenitore w-100 h-100 overflow-auto text-light">
         <div v-if="!elementSearched" >
         </div>
-        <div v-else>
+        <div  class="bo" v-else>
             <h3 class="mt-4 mb-3">Films trovati per : {{elementSearched}}</h3>
-            <div class="library d-flex flex-wrap position-relative">
-                <Card v-for="element in searchedMovies"  :key="element.id" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
-            </div>
 
+            <div >
+                <Card v-for="element in searchedMovies" :key="element.id" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
+            </div>
             <h3 class="mt-4 mb-3">Serie Tv trovate per : {{elementSearched}}</h3>
-            <div class="library d-flex flex-wrap position-relative">
+            <div>
                 <Card v-for="element in searchedTv"  :key="element.id" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
             </div>
             
         </div>
+        <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                <img src="..." class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="..." class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="..." class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div> -->
+        <!-- <split-carousel class="bo">
+            <split-carousel-item  class="" v-for="item in 8" :key="item">
+                <div class="box">{{ item }}</div>
+            </split-carousel-item >
+        </split-carousel> -->
 
 
     </div>
@@ -23,11 +49,16 @@
 
 <script>
 import Card from '@/components/Card.vue'
+// import { SplitCarousel, SplitCarouselItem } from "vue-split-carousel";
+// import SplitCarousel from "./components/SplitCarousel.vue";
+// import SplitCarouselItem from "./components/SplitCarouselItem.vue";
 
 export default {
     name:'CardLists',
     components : {
-        Card
+        Card,
+        // SplitCarousel,
+        // SplitCarouselItem
     },
     props : ['searchedMovies','searchedTv','elementSearched','preUrl'],
     data() {
@@ -89,11 +120,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    // .contenitore {
 
-    //         // .library {
-    //         //     width: $casa *;
-    //         // }
-    // }
-    
 </style>

@@ -1,3 +1,4 @@
+@import '@/style/commons.scss';
 ul{
     list-style: none;
     padding-left: 0;
@@ -6,4 +7,5 @@ ul{
     width: 17px;
     height: 17px;
     top: 3px;
+    color: $gialla;
 }
