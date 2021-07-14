@@ -1,21 +1,16 @@
 <template>
-    <div class="container text-light">
-        <div v-if="!elementSearched"  >
-
+    <div class="contenitore w-100 h-100 overflow-auto text-light">
+        <div v-if="!elementSearched" >
         </div>
         <div v-else>
             <h3 class="mt-4 mb-3">Films trovati per : {{elementSearched}}</h3>
-            <div class="d-flex flex-wrap">
-                <div v-for="element in searchedMovies"  :key="element.id" >
-                    <CardMovie :elementMovie ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
-                </div>
+            <div class="library d-flex flex-wrap position-relative">
+                <Card v-for="element in searchedMovies"  :key="element.id" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
             </div>
 
             <h3 class="mt-4 mb-3">Serie Tv trovate per : {{elementSearched}}</h3>
-            <div class="d-flex flex-wrap">
-                <div v-for="element in searchedTv"  :key="element.id"  >
-                <CardTv :elementTv ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
-                </div>
+            <div class="library d-flex flex-wrap position-relative">
+                <Card v-for="element in searchedTv"  :key="element.id" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
             </div>
             
         </div>
@@ -27,14 +22,12 @@
 </template>
 
 <script>
-import CardMovie from '@/components/CardMovie.vue'
-import CardTv from '@/components/CardTv.vue'
+import Card from '@/components/Card.vue'
 
 export default {
     name:'CardLists',
     components : {
-        CardMovie,
-        CardTv
+        Card
     },
     props : ['searchedMovies','searchedTv','elementSearched','preUrl'],
     data() {
@@ -49,57 +42,58 @@ export default {
     watch : {
         searchedMovies : {
             handler() {
-                this.searchedMovies.map((element)=>{
-                    this.addstar(element);
-                    return element.vote_average
-                });
+                this.addstar(this.searchedMovies);
             }
         },
         searchedTv : {
             handler() {
-                this.searchedTv.map((element)=>{
-                    this.addstar(element);
-                    return element.vote_average
-                })  
+                this.addstar(this.searchedTv);
             }
         }
 
     },
     methods : {
-        addstar(element) {
-            if(element.vote_average % 2 == 0){
+        addstar(array) {
+            array.map((element)=>{
+                if(element.vote_average % 2 == 0){
 
-                this.starsShow = element.vote_average/2;
-                element.vote_average = [];
+                    this.starsShow = element.vote_average/2;
+                    element.vote_average = [];
 
-                for(let i = 0;i < 5 ;i++) {
-                    if(i < this.starsShow) {
-                        element.vote_average.push(this.fullStar);
-                    } else {
-                        element.vote_average.push(this.emptyStar);
+                    for(let i = 0;i < 5 ;i++) {
+                        if(i < this.starsShow) {
+                            element.vote_average.push(this.fullStar);
+                        } else {
+                            element.vote_average.push(this.emptyStar);
+                        }
+                    }
+                } else {
+                    this.starsShow = parseInt(element.vote_average/2);
+                    element.vote_average = [];
+                    for(let i = 0;i < 5 ;i++) {
+
+                        if(i < this.starsShow) {
+                            element.vote_average.push(this.fullStar);
+                        }else if(i < this.starsShow +1) {
+                            element.vote_average.push(this.halfStar);
+                        } else  {
+                            element.vote_average.push(this.emptyStar);
+                        }
                     }
                 }
-            } else {
-                this.starsShow = parseInt(element.vote_average/2);
-                element.vote_average = [];
-                for(let i = 0;i < 5 ;i++) {
-
-                    if(i < this.starsShow) {
-                        element.vote_average.push(this.fullStar);
-                    }else if(i < this.starsShow +1) {
-                        element.vote_average.push(this.halfStar);
-                    } else  {
-                        element.vote_average.push(this.emptyStar);
-                    }
-                }
-            }
-            return element.vote_average
+                return element.vote_average
+            });
         }
     }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    // .contenitore {
 
+    //         // .library {
+    //         //     width: $casa *;
+    //         // }
+    // }
     
 </style>

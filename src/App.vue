@@ -3,7 +3,7 @@
     <header class="d-flex justify-content-end">
       <SearchBar @searchKeyUp="searchForElement" class="m-3"/>
     </header>
-    <main>
+    <main class="px-5">
       <!-- <div class="text-light far fa-star"></div> -->
       <CardList :searchedMovies="searchArrayMovies" :searchedTv="searchArrayTv" :elementSearched="query" :preUrl="preUrlImg"/>
     </main>
@@ -39,35 +39,52 @@ export default {
   methods: {
 
     library(){
-      axios
-      .get(this.apiLinkSearchMovies, {
-        params : {
-          api_key : this.api_key,
-          query : this.query,
-          language : this.language
-        }
-      })
-      .then(rensponse=>{
-        this.searchArrayMovies = rensponse.data.results;
 
-      })
-      .catch(function () {
-          console.log('è vuoto');
-      });
-      axios
-      .get(this.apiLinkSearchTv, {
+
+      const request = {
         params : {
-          api_key : this.api_key,
-          query : this.query,
-          language : this.language
+        api_key : this.api_key,
+        query : this.query,
+        language : this.language
         }
-      })
-      .then(rensponse=>{
-        this.searchArrayTv = rensponse.data.results;
-      })
-      .catch(function () {
-          console.log('è vuoto');
-      });
+      }
+      axios
+        .all([
+          axios.get(this.apiLinkSearchMovies, request),
+          axios.get(this.apiLinkSearchTv, request)
+        ])
+        .then(axios.spread((responseMovie, responseTV)=>{
+          this.searchArrayMovies = responseMovie.data.results;
+          this.searchArrayTv = responseTV.data.results;
+        }))
+      // .get(this.apiLinkSearchMovies, {
+      //   params : {
+      //     api_key : this.api_key,
+      //     query : this.query,
+      //     language : this.language
+      //   }
+      // })
+      // .then(rensponse=>{
+      //   this.searchArrayMovies = rensponse.data.results;
+
+      // })
+      // .catch(function () {
+      //     console.log('è vuoto');
+      // });
+      // axios
+      // .get(this.apiLinkSearchTv, {
+      //   params : {
+      //     api_key : this.api_key,
+      //     query : this.query,
+      //     language : this.language
+      //   }
+      // })
+      // .then(rensponse=>{
+      //   this.searchArrayTv = rensponse.data.results;
+      // })
+      // .catch(function () {
+      //     console.log('è vuoto');
+      // });
     },
     searchForElement(ele){
       if(ele.length >0) {
@@ -81,14 +98,16 @@ export default {
 
 <style lang="scss">
 @import '@/style/commons.scss';
+@import '@/style/commonsTagsClass.scss';
+
 #app {
   header {
     background-color: #1b1b1b;
   }
   main {
+    width: 100%;
     height: calc(100vh - 62px);
     background-color: #1b1b1b;
-    overflow: auto;
   }
 
 }
