@@ -1,47 +1,49 @@
 <template>
-    <div class="contenitore w-100 h-100 overflow-auto text-light">
+    <div class="h-100 text-light ps-4">
         <div v-if="!elementSearched" >
         </div>
-        <div  class="bo" v-else>
-            <h3 class="mt-4 mb-3">Films trovati per : {{elementSearched}}</h3>
+        <div v-else>
+            <!-- prima lista di card  -->
 
-            <div >
-                <Card v-for="element in searchedMovies" :key="element.id" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
+            <div v-if="searchedMovies.length != 0">
+                <h3 class="mt-4 mb-3 ms-4 text-danger">Films trovati per : <span class="text-light text-uppercase">  {{elementSearched}}</span></h3>
+                <carousel
+                :perPage='4'
+                :navigationEnabled="true"
+                :mouse-drag="false"
+                paginationColor="#d8d8d8" paginationActiveColor="#ee1414"
+                class="slider overflow-hidden ms-4">
+                    <slide v-for="(element,index) in searchedMovies" :key="index">
+                        <Card class="card-library rounded-3" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
+                    </slide>
+                </carousel>
             </div>
-            <h3 class="mt-4 mb-3">Serie Tv trovate per : {{elementSearched}}</h3>
-            <div>
-                <Card v-for="element in searchedTv"  :key="element.id" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
+            <div v-else>
+                <h3 class="mt-4 mb-3 ms-4 text-danger">Non ci sono risultati per <span class="text-light text-uppercase"> {{elementSearched}} </span></h3>
             </div>
-            
+            <!-- seconda lista di card  -->
+            <div v-if="searchedTv.length != 0">
+                <h3 class="mt-4 mb-3 ms-4 text-danger">Serie Tv trovate per : <span class="text-light text-uppercase">  {{elementSearched}}</span></h3>
+                <carousel
+                    :perPage='4'
+                    :navigationEnabled="true"
+                    :mouse-drag="false"
+                    paginationColor="#d8d8d8" paginationActiveColor="#ee1414"
+                    class="slider overflow-hidden ms-4">
+                        <slide v-for="(element,index) in searchedTv" :key="index">
+                            <Card  class="card-library rounded-3" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
+                        </slide>
+                </carousel>
+            </div>
+            <div v-else>
+                <h3 class="mt-4 mb-3 ms-4 text-danger">Non ci sono risultati per <span class="text-light text-uppercase"> {{elementSearched}} </span></h3>
+            </div>
+
         </div>
-        <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                <img src="..." class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div> -->
-        <!-- <split-carousel class="bo">
-            <split-carousel-item  class="" v-for="item in 8" :key="item">
-                <div class="box">{{ item }}</div>
-            </split-carousel-item >
-        </split-carousel> -->
-
-
+         
+    <!-- :paginationSize ="0" -->
+    <!-- navigationNextLabel="<div>ciao</div>"
+    navigationPrevLabel="<div>ciao</div>" -->
     </div>
 
 
@@ -49,16 +51,14 @@
 
 <script>
 import Card from '@/components/Card.vue'
-// import { SplitCarousel, SplitCarouselItem } from "vue-split-carousel";
-// import SplitCarousel from "./components/SplitCarousel.vue";
-// import SplitCarouselItem from "./components/SplitCarouselItem.vue";
+import { Carousel, Slide } from 'vue-carousel';
 
 export default {
     name:'CardLists',
     components : {
         Card,
-        // SplitCarousel,
-        // SplitCarouselItem
+        Carousel,
+        Slide
     },
     props : ['searchedMovies','searchedTv','elementSearched','preUrl'],
     data() {
@@ -114,6 +114,9 @@ export default {
                 }
                 return element.vote_average
             });
+        },
+        handleSlideClick (dataset){
+            console.log(dataset.index, dataset.name)
         }
     }
 }
@@ -121,4 +124,8 @@ export default {
 
 <style lang="scss" scoped>
 
+
+.slider {
+        width: calc(100vw - 50px);
+    }
 </style>

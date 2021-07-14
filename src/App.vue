@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <header class="d-flex justify-content-end">
+    <header class="d-flex justify-content-end ">
+      <!-- <Logo/> -->
       <SearchBar @searchKeyUp="searchForElement" class="m-3"/>
     </header>
-    <main class="px-5">
+    <main class="overflow-auto">
       <!-- <div class="text-light far fa-star"></div> -->
       <CardList :searchedMovies="searchArrayMovies" :searchedTv="searchArrayTv" :elementSearched="query" :preUrl="preUrlImg"/>
     </main>
@@ -56,6 +57,7 @@ export default {
         .then(axios.spread((responseMovie, responseTV)=>{
           this.searchArrayMovies = responseMovie.data.results;
           this.searchArrayTv = responseTV.data.results;
+          console.log(responseTV.data.results);
         }))
 
 
@@ -77,10 +79,10 @@ export default {
 #app {
   header {
     background-color: #1b1b1b;
+    height: 65px;
   }
   main {
-    width: 100%;
-    height: calc(100vh - 62px);
+    height: calc(100vh - 65px);
     background-color: #1b1b1b;
   }
 

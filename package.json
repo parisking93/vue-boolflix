@@ -13,6 +13,7 @@
     "bootstrap": "^5.0.2",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-carousel": "^0.18.0",
     "vue-split-carousel": "^2.1.0"
   },
   "devDependencies": {
