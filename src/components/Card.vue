@@ -4,7 +4,7 @@
             <div class="position-relative  card-library rounded-3">
                 <img class="copertina w-100 h-100 rounded-3" v-if="elementCard.poster_path != null" :src="urlImgBefore + elementCard.poster_path" :alt="elementCard.name || elementCard.title">
                 <div v-else  class="p-3">
-                    <span class="text-capitalize display-6 text-wrap">Copertina non dispondibile</span> 
+                    <span class="text-capitalize display-6 text-wrap">Copertina non dispondibile {{elementCard.id}}</span> 
                 </div>
             </div>
         </div>

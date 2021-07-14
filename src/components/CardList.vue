@@ -1,6 +1,17 @@
 <template>
     <div class="h-100 text-light ps-4">
         <div v-if="!elementSearched" >
+            <h3 class="mt-4 mb-3 ms-4 text-danger">Nuove Uscitei</h3>
+            <carousel
+            :perPage='4'
+            :navigationEnabled="true"
+            :mouse-drag="false"
+            paginationColor="#d8d8d8" paginationActiveColor="#ee1414"
+            class="slider overflow-hidden ms-4">
+                <slide v-for="(element,index) in discoverMovies" :key="index">
+                    <Card  class="card-library rounded-3" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
+                </slide>
+            </carousel>
         </div>
         <div v-else>
             <!-- prima lista di card  -->
@@ -40,10 +51,8 @@
             </div>
 
         </div>
-         
-    <!-- :paginationSize ="0" -->
-    <!-- navigationNextLabel="<div>ciao</div>"
-    navigationPrevLabel="<div>ciao</div>" -->
+         <!-- <div v-for="(element, index) in discoverMovies" :key="index">
+         </div> -->
     </div>
 
 
@@ -60,7 +69,7 @@ export default {
         Carousel,
         Slide
     },
-    props : ['searchedMovies','searchedTv','elementSearched','preUrl'],
+    props : ['searchedMovies','searchedTv','elementSearched','preUrl','discoverMovies'],
     data() {
         return {
             flag :  'https://flagcdn.com/',
@@ -79,6 +88,12 @@ export default {
         searchedTv : {
             handler() {
                 this.addstar(this.searchedTv);
+            }
+        },
+        discoverMovies : {
+            handler() {
+                this.addstar(this.discoverMovies);
+                console.log(this.discoverMovies);
             }
         }
 
