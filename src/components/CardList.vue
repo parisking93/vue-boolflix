@@ -1,17 +1,23 @@
 <template>
     <div class="h-100 text-light ps-4">
+        <!-- lista iniziale card  -->
         <div v-if="!elementSearched" >
-            <h3 class="mt-4 mb-3 ms-4 text-danger">Nuove Uscite</h3>
-            <carousel
-            :perPage='4'
-            :navigationEnabled="true"
-            :mouse-drag="false"
-            paginationColor="#d8d8d8" paginationActiveColor="#ee1414"
-            class="slider overflow-hidden ms-4">
-                <slide v-for="(element,index) in discoverMovies" :key="index">
-                    <Card  class="card-library rounded-3" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
-                </slide>
-            </carousel>
+            <template v-if="!elementSearched && discoverMovies.length == 0">
+                <Loader/>
+            </template> 
+            <template v-else> 
+                 <h3 class="mt-4 mb-3 ms-4 text-danger">Nuove Uscite</h3>
+                <carousel
+                :perPage='4'
+                :navigationEnabled="true"
+                :mouse-drag="false"
+                paginationColor="#d8d8d8" paginationActiveColor="#ee1414"
+                class="slider overflow-hidden ms-4">
+                    <slide v-for="(element,index) in discoverMovies" :key="index">
+                        <Card  class="card-library rounded-3" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
+                    </slide>
+                </carousel>
+            </template>
         </div>
         <div v-else>
             <!-- prima lista di card  -->
@@ -61,13 +67,16 @@
 <script>
 import Card from '@/components/Card.vue'
 import { Carousel, Slide } from 'vue-carousel';
+import Loader from '@/components/Loader.vue';
+
 
 export default {
     name:'CardLists',
     components : {
         Card,
         Carousel,
-        Slide
+        Slide,
+        Loader
     },
     props : ['searchedMovies','searchedTv','elementSearched','preUrl','discoverMovies'],
     data() {

@@ -4,9 +4,8 @@
       <Logo/>
       <SearchBar @searchKeyUp="searchForElement" class="m-3"/>
     </header>
-    <main class="overflow-auto">
-      <!-- <div class="text-light far fa-star"></div> -->
-      <CardList :discoverMovies="discoverArray" :searchedMovies="searchArrayMovies" :searchedTv="searchArrayTv" :elementSearched="query" :preUrl="preUrlImg"/>
+    <main class="overflow-hidden">
+      <CardList class="overflow-auto h-100" :discoverMovies="discoverArray" :searchedMovies="searchArrayMovies" :searchedTv="searchArrayTv" :elementSearched="query" :preUrl="preUrlImg"/>
     </main>
   </div>
 </template>
@@ -111,7 +110,6 @@ export default {
   header {
     background-color: #2d2b2b;
     height: 80px;
-    // font-family: "Open Sans Condensed"
 
   }
   main {
