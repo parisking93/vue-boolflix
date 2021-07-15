@@ -13,10 +13,10 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import SearchBar from '@/components/SearchBar.vue'
-import Logo from '@/components/Logo.vue'
-import CardList from '@/components/CardList.vue'
-import axios from 'axios'
+import SearchBar from '@/components/SearchBar.vue';
+import Logo from '@/components/Logo.vue';
+import CardList from '@/components/CardList.vue';
+import axios from 'axios';
 
 export default {
   name: 'App',
@@ -65,8 +65,7 @@ export default {
       .then(rensponse => {
 
         this.discoverArray = rensponse.data.results
-        // console.log(this.discoverArray.length);
-        // console.log(this.discoverArray);
+
       });
 
     
@@ -112,8 +111,10 @@ export default {
 
 #app {
   header {
-    background-color: #1b1b1b;
+    background-color: #2d2b2b;
     height: 80px;
+    // font-family: "Open Sans Condensed"
+
   }
   main {
     height: calc(100vh - 80px);

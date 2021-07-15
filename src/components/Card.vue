@@ -4,12 +4,12 @@
             <div class="position-relative  card-library rounded-3">
                 <img class="copertina w-100 h-100 rounded-3" v-if="elementCard.poster_path != null" :src="urlImgBefore + elementCard.poster_path" :alt="elementCard.name || elementCard.title">
                 <div v-else  class="p-3">
-                    <span class="text-capitalize display-6 text-wrap">Copertina non dispondibile {{elementCard.id}}</span> 
+                    <span class="text-capitalize display-6 text-wrap">Copertina non dispondibile</span> 
                 </div>
             </div>
         </div>
         <div :class="hoverCard ? 'front': 'back'" class='position-absolute top-0 cards-down'>
-            <ul class="position-relative card-library rounded-3 text-wrap p-3" >
+            <ul class="position-relative card-library rounded-3 text-wrap p-3 overflow-auto" >
                 <li><strong>titolo originale : </strong> {{elementCard.original_name || elementCard.original_title}}</li>
                 <li><strong>titolo : </strong> {{elementCard.name || elementCard.title}}</li>
                 <li>
@@ -30,6 +30,8 @@
                             </div>
                     </div>
                 </li>
+
+                <li class="mt-3"><strong>Overview : </strong> {{elementCard.overview || empty}}</li>
             </ul>
         </div>
     </div>
@@ -42,7 +44,8 @@ export default {
     props : ['elementCard','elementFlag','elementSvg','urlImgBefore'],
     data() {
         return {
-            hoverCard : false
+            hoverCard : false,
+            empty : 'Nessuna Info '
         }
     },
     methods: {
@@ -57,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+    
     .copertina {
         object-fit: cover;
         object-position: center;
@@ -71,6 +74,9 @@ export default {
     }
     .front {
         opacity: 1;
+    }
+    strong {
+        color: salmon;
     }
     .card-library {
         width: 310px;

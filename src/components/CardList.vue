@@ -1,7 +1,7 @@
 <template>
     <div class="h-100 text-light ps-4">
         <div v-if="!elementSearched" >
-            <h3 class="mt-4 mb-3 ms-4 text-danger">Nuove Uscitei</h3>
+            <h3 class="mt-4 mb-3 ms-4 text-danger">Nuove Uscite</h3>
             <carousel
             :perPage='4'
             :navigationEnabled="true"
