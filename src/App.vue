@@ -29,7 +29,7 @@ export default {
     return {
       apiLinkSearchMovies :"https://api.themoviedb.org/3/search/movie",
       apiLinkSearchTv : "https://api.themoviedb.org/3/search/tv",
-      apiLinkGenre : "https://api.themoviedb.org/3/genre/movie/list",
+      // apiLinkGenre : "https://api.themoviedb.org/3/genre/movie/list",
       apiLinkDiscover : "https://api.themoviedb.org/3/discover/movie",
       api_key : '7e7faac1db87ee1385f5258c9fdad986',
       query : '',
@@ -37,24 +37,24 @@ export default {
       searchArrayTv : '',
       language : 'it-IT',
       preUrlImg : 'https://image.tmdb.org/t/p/w342',
-      genreArray : [],
+      // genreArray : [],
       discoverArray : [],
       popularity : 'popularity.desc'
 
     }
   },
   created(){
-    axios
-      .get(this.apiLinkGenre, {
-        params : {
-           api_key : this.api_key,
-          language : this.language
-        }
-      })
-      .then(rensponse => {
-        console.log(rensponse.data.genres);
-        this.genreArray = rensponse.data.genres;
-      });
+    // axios
+    //   .get(this.apiLinkGenre, {
+    //     params : {
+    //        api_key : this.api_key,
+    //       language : this.language
+    //     }
+    //   })
+    //   .then(rensponse => {
+    //     console.log(rensponse.data.genres);
+    //     this.genreArray = rensponse.data.genres;
+    //   });
           axios
       .get(this.apiLinkDiscover, {
         params : {
@@ -63,9 +63,7 @@ export default {
         }
       })
       .then(rensponse => {
-
         this.discoverArray = rensponse.data.results
-
       });
 
     
