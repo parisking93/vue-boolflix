@@ -5,7 +5,7 @@
       <SearchBar @searchKeyUp="searchForElement" class="m-3"/>
     </header>
     <main class="overflow-hidden">
-      <CardList class="overflow-auto h-100" :discoverMovies="discoverArray" :searchedMovies="searchArrayMovies" :searchedTv="searchArrayTv" :elementSearched="query" :preUrl="preUrlImg"/>
+      <CardList class="overflow-auto h-100" :genreMovies="genreArray" :searchedMovies="searchArrayMovies" :searchedTv="searchArrayTv" :elementSearched="query" :preUrl="preUrlImg"/>
     </main>
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
     return {
       apiLinkSearchMovies :"https://api.themoviedb.org/3/search/movie",
       apiLinkSearchTv : "https://api.themoviedb.org/3/search/tv",
-      // apiLinkGenre : "https://api.themoviedb.org/3/genre/movie/list",
+      apiLinkGenre : "https://api.themoviedb.org/3/genre/movie/list",
       apiLinkDiscover : "https://api.themoviedb.org/3/discover/movie",
       api_key : '7e7faac1db87ee1385f5258c9fdad986',
       query : '',
@@ -36,36 +36,67 @@ export default {
       searchArrayTv : '',
       language : 'it-IT',
       preUrlImg : 'https://image.tmdb.org/t/p/w342',
-      // genreArray : [],
+      genreArray : [],
       discoverArray : [],
-      popularity : 'popularity.desc'
+      popularity : 'popularity.desc',
 
     }
   },
   created(){
-    // axios
-    //   .get(this.apiLinkGenre, {
-    //     params : {
-    //        api_key : this.api_key,
-    //       language : this.language
-    //     }
-    //   })
-    //   .then(rensponse => {
-    //     console.log(rensponse.data.genres);
-    //     this.genreArray = rensponse.data.genres;
-    //   });
-          axios
-      .get(this.apiLinkDiscover, {
-        params : {
-           api_key : this.api_key,
-          sort_by : this.popularity
-        }
-      })
-      .then(rensponse => {
-        this.discoverArray = rensponse.data.results
-      });
+
+      
+      // api per la schermata iniziale genere e discover
+      axios
+        .get(this.apiLinkDiscover, {
+          params : {
+            api_key : this.api_key,
+            sort_by : this.popularity
+          }
+        })
+        .then(rensponse => {
+          this.discoverArray = rensponse.data.results
+          let newElement = {
+            id : 1,
+            name : 'Nuove Uscite',
+            arrGenere : this.discoverArray
+          }
+          this.genreArray.unshift(newElement)
+
+        });
+        axios
+        .get(this.apiLinkGenre, {
+          params : {
+            api_key : this.api_key,
+            language : this.language
+          }
+        })
+        .then(rensponse => {
+          this.genreArray = rensponse.data.genres;
+        });
+
 
     
+  },
+  watch : {
+    genreArray : {
+      handler() {
+        this.genreArray.map((element) =>{
+          if(!element.arrGenere) {
+            axios
+              .get(this.apiLinkDiscover, {
+                params : {
+                  api_key : this.api_key,
+                  with_genres : element.id,
+                  language : this.language
+                }
+              })
+              .then(rensponse => {
+                 return element.arrGenere = rensponse.data.results
+              });
+          }
+        });
+      }
+    }
   },
   methods: {
 
@@ -87,7 +118,6 @@ export default {
         .then(axios.spread((responseMovie, responseTV)=>{
           this.searchArrayMovies = responseMovie.data.results;
           this.searchArrayTv = responseTV.data.results;
-          console.log(responseTV.data.results);
         }))
 
 

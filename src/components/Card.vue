@@ -19,7 +19,7 @@
                     <img v-else :src="elementFlag + elementCard.original_language + elementSvg" width="30" :alt="elementCard.original_language"> 
 
                 </li>
-                <li><strong>voto :  </strong>
+                <li v-if="isNaN(elementCard.vote_average)"><strong>voto :  </strong>
                     <div v-for="(element,index) in elementCard.vote_average" :key="index" class="d-inline-block">
                             <div v-if="element == 'fas fa-star-half'"  class="box-star position-relative d-inline-block" >
                                 <i class="position-absolute  far far fa-star"></i>
@@ -79,8 +79,8 @@ export default {
         color: salmon;
     }
     .card-library {
-        width: 310px;
-        height: 470px;
+        width: 320px;
+        height: 500px;
         overflow: hidden;
         background-color: rgba($color: #3d3b3b, $alpha: 1);
     }

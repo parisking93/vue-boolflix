@@ -1,23 +1,28 @@
 <template>
     <div class="h-100 text-light ps-4">
         <!-- lista iniziale card  -->
+
         <div v-if="!elementSearched" >
-            <template v-if="!elementSearched && discoverMovies.length == 0">
+            <div v-if="!done" class="text-ligth">
                 <Loader/>
-            </template> 
-            <template v-else> 
-                 <h3 class="mt-4 mb-3 ms-4 text-danger">Nuove Uscite</h3>
-                <carousel
-                :perPage='4'
-                :navigationEnabled="true"
-                :mouse-drag="false"
-                paginationColor="#d8d8d8" paginationActiveColor="#ee1414"
-                class="slider overflow-hidden ms-4">
-                    <slide v-for="(element,index) in discoverMovies" :key="index">
-                        <Card  class="card-library rounded-3" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
-                    </slide>
-                </carousel>
-            </template>
+            </div>
+            <div v-else >
+                <div v-for="genere in genreMovies" :key="genere.id">
+                    <h3 class="mt-4 mb-3 ms-4 text-danger">{{genere.name}}</h3>
+                    <carousel
+                    :perPage='4'
+                    :navigationEnabled="true"
+                    :mouse-drag="false"
+                    paginationColor="#d8d8d8" paginationActiveColor="#ee1414"
+                    class="slider overflow-hidden ms-4">
+                        <slide v-for="(element,index) in genere.arrGenere" :key="index">
+                            <Card class="card-library rounded-3" :elementCard ="element" :elementFlag="flag" :elementSvg="svg" :urlImgBefore="preUrl"/>
+                        </slide>
+                    </carousel>
+                </div> 
+
+            </div> 
+
         </div>
         <div v-else>
             <!-- prima lista di card  -->
@@ -78,17 +83,27 @@ export default {
         Slide,
         Loader
     },
-    props : ['searchedMovies','searchedTv','elementSearched','preUrl','discoverMovies'],
+    props : ['searchedMovies','searchedTv','elementSearched','preUrl','genreMovies'],
     data() {
         return {
             flag :  'https://flagcdn.com/',
             svg : '.svg',
             halfStar : 'fas fa-star-half',
             emptyStar : 'far fa-star',
-            fullStar : 'fas fa-star'
+            fullStar : 'fas fa-star',
+            done : false,
         }   
     },
     watch : {
+        genreMovies : {
+            handler() {
+                if(this.genreMovies.length > 1) {
+                    setTimeout(()=>{
+                        this.done = true
+                    },1000)
+                }
+            }
+        },
         searchedMovies : {
             handler() {
                 this.addstar(this.searchedMovies);
@@ -98,14 +113,7 @@ export default {
             handler() {
                 this.addstar(this.searchedTv);
             }
-        },
-        discoverMovies : {
-            handler() {
-                this.addstar(this.discoverMovies);
-                console.log(this.discoverMovies);
-            }
         }
-
     },
     methods : {
         addstar(array) {
@@ -139,9 +147,38 @@ export default {
                 return element.vote_average
             });
         },
-        handleSlideClick (dataset){
-            console.log(dataset.index, dataset.name)
-        }
+        addstarS(array) {
+            array.map((element)=>{
+                if(element.vote_average % 2 == 0){
+
+                    this.starsShow = element.vote_average/2;
+                    element.vote_average = [];
+
+                    for(let i = 0;i < 5 ;i++) {
+                        if(i < this.starsShow) {
+                            element.vote_average.push(this.fullStar);
+                        } else {
+                            element.vote_average.push(this.emptyStar);
+                        }
+                    }
+                } else {
+                    this.starsShow = parseInt(element.vote_average/2);
+                    element.vote_average = [];
+                    for(let i = 0;i < 5 ;i++) {
+
+                        if(i < this.starsShow) {
+                            element.vote_average.push(this.fullStar);
+                        }else if(i < this.starsShow +1) {
+                            element.vote_average.push(this.halfStar);
+                        } else  {
+                            element.vote_average.push(this.emptyStar);
+                        }
+                    }
+                }
+                return element.vote_average
+            });
+        },
+
     }
 }
 </script>
